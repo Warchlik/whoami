@@ -1,0 +1,28 @@
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  border-radius: 50%;
+  background: #e5e5e5;
+  pointer-events: none;
+  z-index: 9999;
+  translate: -50% -50%;
+  mix-blend-mode: difference;
+}
+
+html,
+body {
+  cursor: none;
+}
+
+*,
+*::before,
+*::after {
+  cursor: none !important;
+}
+
+input,
+textarea,
+[contenteditable='true'] {
+  cursor: text !important;
+}

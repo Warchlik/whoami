@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@fontsource-variable/jetbrains-mono/wght.css";
+
+@import "./components/custom/coursor_dot/cursor_dot.css";
+@source "./";
+
+@theme {
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+}
+
+html {
+  scroll-padding-top: 5rem;
+}
