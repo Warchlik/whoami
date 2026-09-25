@@ -8,7 +8,3 @@
 @theme {
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 }
-
-html {
-  scroll-padding-top: 5rem;
-}

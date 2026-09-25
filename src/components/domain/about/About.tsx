@@ -1,11 +1,14 @@
-const facts = ['Warsaw, PL', 'Full Stack Engineer', 'Commercial since 2024']
 
-const stack = ['Python', 'TypeScript', 'PHP', 'React', 'Next.js', 'FastAPI', 'Laravel', 'PostgreSQL', 'Docker', 'Linux']
+const facts = [
+  'Warsaw, PL',
+  'Full Stack Engineer',
+  'Commercial since 2024'
+] as const satisfies string[]
 
 const About = () => {
   return (
-    <section id="about" class={"w-full bg-gray-800 text-white"}>
-      <div class={"max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
+    <section id="about" data-nav-theme="dark" class={"w-full min-h-dvh flex items-center bg-gray-800 text-white"}>
+      <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
         <span class={"text-sm text-gray-400"}>// about</span>
 
         <h2 class={"text-3xl md:text-4xl font-bold leading-tight"}>
@@ -21,12 +24,6 @@ const About = () => {
         <ul class={"flex flex-row flex-wrap gap-2"}>
           {facts.map((fact) => (
             <li class={"rounded-full bg-white/10 px-3 py-1 text-sm"}>{fact}</li>
-          ))}
-        </ul>
-
-        <ul class={"flex flex-row flex-wrap gap-x-4 gap-y-1 text-sm text-gray-400"}>
-          {stack.map((tech) => (
-            <li>{tech}</li>
           ))}
         </ul>
       </div>
