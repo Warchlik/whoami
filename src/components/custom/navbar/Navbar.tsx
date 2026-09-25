@@ -8,7 +8,7 @@ const items = [
   { label: '!Main', href: '#' },
   { label: '@Exp', href: '#experience' },
   { label: '#About', href: '#about' },
-  { label: '$Stack', href: '#about' },
+  { label: '$Stack', href: '#stack' },
   { label: '%Repo', href: '#projects' },
   { label: '^Con', href: '#contact' },
 ] as const satisfies NavItem[]
