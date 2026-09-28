@@ -7,8 +7,8 @@ type Folder = {
 }
 
 const folders = [
-  { name: 'ts-js', files: ['react.js', 'next.js', 'hono.js', 'tailwind.css', 'express.js', 'tanstack start'] },
-  { name: 'python', files: ['fastapi.py', 'django.py', 'pandas.py', 'drf.py', 'ski-learn.py', 'pytorch.py'] },
+  { name: 'ts-js', files: ['react.js', 'next.js', 'hono.js', 'tailwind.css', 'express.js', 'tanstack-start.ts'] },
+  { name: 'python', files: ['fastapi.py', 'django.py', 'pandas.py', 'drf.py', 'scikit-learn.py', 'pytorch.py'] },
   { name: 'golang', files: ['chi.go', 'gin.go'] },
   { name: 'php', files: ['laravel.php', 'yii2.php'] },
 ] as const satisfies Folder[]
@@ -44,7 +44,6 @@ const Stack = ({ language }: { language: Language }) => {
                       data-hover
                       class={"flex flex-row items-center gap-2 py-1 list-none [&::-webkit-details-marker]:hidden"}
                     >
-                      {/* <span class={"text-gray-400 transition-transform duration-200 group-open/folder:rotate-90"}>▸</span> */}
                       <span class={"ml-1 size-1.5 shrink-0 bg-gray-800 transition-transform duration-200 group-open/folder:rotate-90"} />
                       <span class={"font-bold"}>{folder.name}/</span>
                     </summary>

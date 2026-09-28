@@ -9,10 +9,9 @@ Jednostronicowe portfolio (one-pager) renderowane po stronie serwera przez Hono 
 | Serwer / routing / JSX | [Hono](https://hono.dev) (`hono/jsx`, `jsxRenderer`) |
 | Build / dev server | Vite 8 + `@cloudflare/vite-plugin` + `vite-ssr-components` |
 | Hosting | Cloudflare Workers (`wrangler`) |
-| Style | Tailwind CSS v4 (`@tailwindcss/vite`), `tw-animate-css` |
+| Style | Tailwind CSS v4 (`@tailwindcss/vite`) |
 | Animacje (client) | `motion` |
 | Font | JetBrains Mono Variable (`@fontsource-variable/jetbrains-mono`) |
-| Walidacja (API) | `zod`, `@hono/zod-validator` |
 
 ## Uruchamianie
 
@@ -37,8 +36,8 @@ flowchart LR
   B -. ładuje .-> G[src/script.ts<br/>skrypty klienta]
 ```
 
-- **Serwer** renderuje cały HTML: `layout.tsx` owija każdą stronę w `<html>`, dokłada CSS i font, `Navbar`, `CursorDot` i `PageWrapper` (`<main>`).
-- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `reveal()`, `hero()`, `hero_field()`, `hero_life()` i `experience()` (`scroll_progress()` jest na razie wyłączone).
+- **Serwer** renderuje cały HTML: `layout.tsx` owija każdą stronę w `<html>`, dokłada `<head>` (charset, viewport, `<title>`, `<meta name="description">`, CSS i font), `Navbar`, `CursorDot`, `PageWrapper` (`<main>`) i `Footer`.
+- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `reveal()`, `hero()`, `life()` i `experience()`.
 
 ## Struktura
 
@@ -54,20 +53,20 @@ src/
 │   ├── layout.tsx             # jsxRenderer: szkielet dokumentu
 │   └── language.ts            # pula języków (prefiks komentarza) i randomLanguage()
 └── components/
-    ├── base/                  # proste klocki UI (Button, SectionLabel)
+    ├── base/                  # proste klocki UI (SectionLabel)
     ├── custom/                # elementy globalne strony
     │   ├── navbar/            # Navbar.tsx + navbar.client.ts (motyw jasny/ciemny)
     │   ├── coursor_dot/       # własny kursor (CursorDot.tsx, cursor_dot.client.ts, .css)
     │   ├── reveal/            # animacje wjazdu przy scrollu (reveal.client.ts, reveal.css)
-    │   └── scroll_progress/   # pasek postępu u góry (ScrollProgress.tsx + scroll_progress.client.ts)
+    │   ├── life/              # Life.tsx + life.client.ts: tło „Gra w życie” (hero, stopka)
+    │   └── footer/            # Footer.tsx: © rok (liczony przy renderze) + „built with…”, w tle <Life />
     ├── domain/                # sekcje strony
     │   ├── PageWrapper.tsx    # <main>
-    │   ├── hero/              # Hero.tsx + hero.client.ts (parallax) + tła ASCII: hero_life / hero_field (.client.ts), ascii_grid.client.ts
+    │   ├── hero/              # Hero.tsx + hero.client.ts (parallax), w tle <Life />
     │   ├── about/
     │   ├── stack/
     │   ├── experience/        # Experience.tsx + experience.client.ts (karta przy kursorze)
-    │   ├── contact/
-    │   └── projects/          # puste — czeka na projekty
+    │   └── contact/
     └── features/
         └── RootPage.tsx       # składa sekcje w kolejności
 ```
@@ -80,12 +79,12 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 | # | Sekcja | `id` | Tło | `data-nav-theme` | Co zawiera |
 |---|---|---|---|---|---|
-| 1 | Hero | — | białe | `light` | Prezentacja, nie sekcja (bez etykiety i `h2`). Imię (`text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK SOFTWARE ENGINEER` do prawej. W tle Gra w życie w ASCII |
+| 1 | Hero | — | białe | `light` | Prezentacja, nie sekcja (bez etykiety i `h2`). Imię jako `h1` (`text-4xl sm:text-6xl lg:text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK SOFTWARE ENGINEER` do prawej. W tle Gra w życie w ASCII |
 | 2 | About | `about` | `gray-800` | `dark` | Nagłówek, 3 zdania o mnie, fakty w pillach (`facts`) |
 | 3 | Stack | `stack` | białe | `light` | Okno „edytora” z drzewem plików: folder = język, plik = technologia (`folders`) |
 | 4 | Experience | `experience` | `gray-800` | `dark` | Płaskie bloki od najnowszego; szczegóły w karcie przy kursorze (`jobs`) |
-| 5 | Contact | `contact` | białe | `light` | Lista linków: email, GitHub (`links`) |
-| — | Repo | `projects` | — | — | **Jeszcze nie ma**. Link w navbarze już istnieje |
+| 5 | Contact | `contact` | białe | `light` | Lista linków (`links`): email, LinkedIn, GitHub, CV. CV to plik `public/szymon-wardak-cv-pl.pdf`, serwowany pod `/szymon-wardak-cv-pl.pdf` i otwierany w nowej karcie |
+| — | Repo | `projects` | — | — | **Jeszcze nie ma** (brak nawet pustego komponentu). Pozycja `%Repo` w navbarze jest zakomentowana |
 
 ## Zasady projektu
 
@@ -117,6 +116,7 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 - **Zwinięty:** płaska kreska (`p-1`) z kwadracikami. **Rozwinięty** (hover albo focus z klawiatury): kwadraciki znikają (`size-0 opacity-0`), pojawiają się etykiety.
 - Etykiety rosną dzięki trikowi z gridem: `grid-cols-[0fr] grid-rows-[0fr]` → `[1fr]`, a na wewnętrznym spanie `min-w-0 min-h-0 overflow-hidden`. CSS nie umie animować do `width: auto`, za to wartości `fr` animować umie.
 - Niewidzialny wrapper z paddingiem (`px-10 pt-5 pb-8`) sprawia, że menu otwiera się już przy zbliżeniu myszki.
+- **Pozycje** (`items`) idą w kolejności sekcji na stronie, a symbole to kolejne klawisze Shift+1…6: `!Main @About #Stack $Exp %Con`. Po dodaniu sekcji Repo: odkomentować `%Repo` i zmienić Contact na `^Con`.
 - **Motyw:** `navbar.client.ts` przy scrollu i resize (najwyżej raz na klatkę, przez `requestAnimationFrame`) sprawdza, która sekcja jest pod środkiem navbara, i ustawia `data-theme` na `<nav>`. Klasy `data-[theme=dark]:bg-white data-[theme=dark]:text-gray-800` odwracają kolory, a kwadraciki (`bg-current`) odwracają się same.
 
 ### Kursor (`custom/coursor_dot/`)
@@ -125,12 +125,16 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 ### Hero (`domain/hero/`)
 - `hero.client.ts`: parallax, czyli przy scrollu pierwszego ekranu napis odjeżdża o 120px i znika. Używa `scroll(callback)`, bo `scroll(animate(...))` w `motion` 13.4 ignoruje `offset` dla `y`.
 - Przy `prefers-reduced-motion: reduce` parallax jest wyłączony.
-- Tła ASCII: każde to `<pre data-…>` na całe hero (`absolute inset-0`, `pointer-events-none`, `aria-hidden`) plus skrypt `.client.ts`, który wraca od razu, jeśli nie znajdzie swojego `<pre>`. Wspólny pomiar siatki znaków: `ascii_grid.client.ts` (`measureGrid`), wołany przy zmianie rozmiaru i po załadowaniu fontu. Włączone tło wybierasz w `Hero.tsx`, odkomentowując odpowiedni `<pre>`.
-  - **Aktywne:** `hero_life.client.ts` → `<pre data-hero-life>`. Gra w życie w podwójnej rozdzielczości, port „Golgol” (`gol_double_res`) z [play.core](https://github.com/ertdfgcvb/play.core) (Apache-2.0). Każdy znak to dwie komórki jedna nad drugą (`█ ▀ ▄` i spacja). Start z losowego stanu, krok co `1000 / FPS` ms (`FPS = 30`), przytrzymanie i przeciągnięcie myszką/palcem sieje losowy kwadrat 11×11. Pętla staje, gdy hero jest poza ekranem; przy `prefers-reduced-motion: reduce` zostaje jedna nieruchoma klatka.
-  - **Zakomentowane:** `hero_field.client.ts` → `<pre data-hero-field>`. Port „Two circles” z play.core: koło na środku zlewa się z kołem pod kursorem, znaki `#WX?*:÷×+=-· ` zależnie od odległości od kształtu. Rysuje się tylko po ruchu kursora.
+- W tle `<Life class="text-gray-400" />`, patrz niżej.
+
+### Gra w życie (`custom/life/`)
+- `<Life class="text-…" />` wstawia `<pre data-life>` na cały rodzic (`absolute inset-0`, `pointer-events-none`, `aria-hidden`). Rodzic musi mieć `relative overflow-hidden`, a treść nad tłem `relative`. Klasa ustala kolor komórek: hero `text-gray-400`, stopka `text-gray-200`.
+- `life.client.ts` (`life()` w `script.ts`) uruchamia osobną symulację dla każdego `[data-life]` na stronie, dopasowaną do rozmiaru rodzica. Gra w życie w podwójnej rozdzielczości, port „Golgol” (`gol_double_res`) z [play.core](https://github.com/ertdfgcvb/play.core) (Apache-2.0): każdy znak to dwie komórki jedna nad drugą (`█ ▀ ▄` i spacja).
+- Start z losowego stanu, krok co `1000 / FPS` ms (`FPS = 24`). Przytrzymanie i przeciągnięcie myszką/palcem nad rodzicem sieje losowy kwadrat 11×11.
+- Siatka przelicza się przy zmianie rozmiaru i po załadowaniu fontu. Każda warstwa staje, gdy jej rodzic jest poza ekranem; przy `prefers-reduced-motion: reduce` zostaje jedna nieruchoma klatka.
 
 ### Stack (`domain/stack/`)
-- Foldery to natywne `<details open>` / `<summary>`: zwijanie bez JS-a, działa z klawiatury. Strzałka obraca się przez `group-open/folder:rotate-90`.
+- Foldery to natywne `<details open>` / `<summary>`: zwijanie bez JS-a, działa z klawiatury. Kwadracik przy folderze obraca się przez `group-open/folder:rotate-90`.
 - Na szerokich ekranach 2 kolumny, na telefonie 1.
 
 ### Experience (`domain/experience/`)
@@ -150,13 +154,6 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 ## Otwarte sprawy
 
-- [ ] **Sekcja Repo** (`#projects`): czeka na skończone projekty. Po Contact (jasnym) wypada ciemna, a jeśli wejdzie przed Contact, trzeba przestawić tła. Do tego czasu `%Repo` w navbarze prowadzi donikąd: dodać choć 2–3 projekty albo schować tę pozycję.
-- [ ] **`<meta name="viewport" content="width=device-width, initial-scale=1">`** w `<head>` w `layout.tsx`. Bez tego telefon renderuje stronę jako desktop ok. 980px, pomniejszoną.
-- [ ] **Imię w hero na telefonie:** stałe `text-8xl` (96px) nie mieści się na wąskim ekranie. Potrzebny rozmiar responsywny, np. `text-5xl md:text-8xl`.
-- [ ] **Brak `h1`:** imię w `Hero.tsx` to `<span>`. Zamiana na `<h1>` (te same klasy) nie zmienia wyglądu, a daje stronie główny nagłówek dla wyszukiwarek i czytników ekranu.
-- [ ] **`<title>` i opis strony:** w `<head>` w `layout.tsx` nie ma `<title>` ani `<meta name="description">`. Karta w przeglądarce nie ma nazwy, a Google nie ma opisu.
+- [ ] **Sekcja Repo** (`#projects`): czeka na skończone projekty. Po Contact (jasnym) wypada ciemna, a jeśli wejdzie przed Contact, trzeba przestawić tła. `%Repo` w navbarze jest do tego czasu zakomentowane.
 - [ ] **Podgląd linku (Open Graph):** brak `og:title`, `og:description`, `og:image`, więc po wklejeniu linku na LinkedIn / Slack / Messenger nie pojawia się ładna karta z tytułem i obrazkiem.
-- [ ] **Kolejność w navbarze:** `@Exp` stoi przed `#About`, a na stronie Experience jest po Stacku.
 - [ ] **`tsconfig.json`**: `"lib": ["ESNext"]` bez `"DOM"`, więc LSP zgłasza błędy `window` / `document` w plikach `.ts` klienta. Vite buduje mimo to.
-- [ ] `projects.client.ts` i `Projects.tsx` są puste.
-- [ ] Stopka: w `layout.tsx` jest tylko komentarz `{/* Footer component */}`.

@@ -1,16 +1,15 @@
-import { type AsciiGrid, measureGrid } from './ascii_grid.client'
+// Game of Life at double vertical resolution, ported from play.core "Golgol" (ertdfgcvb, Apache-2.0).
 
 const FPS = 24
 const BRUSH = 5
 
-export const hero_life = () => {
-  const section = document.querySelector<HTMLElement>('[data-hero]')
-  const field = section?.querySelector<HTMLElement>('[data-hero-life]')
-  if (!section || !field) return
+const run = (field: HTMLElement) => {
+  const container = field.parentElement
+  if (!container) return
 
   const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  let grid: AsciiGrid = { cols: 0, rows: 0, cellWidth: 1, cellHeight: 1 }
+  let grid = { cols: 0, rows: 0, cellWidth: 1, cellHeight: 1 }
   let width = 0
   let height = 0
   let cells = new Uint8Array(0)
@@ -74,16 +73,27 @@ export const hero_life = () => {
   }
 
   const updateLoop = () => {
-    const run = visible && !still
-    if (run && !frame) frame = requestAnimationFrame(tick)
-    if (!run && frame) {
+    const running = visible && !still
+    if (running && !frame) frame = requestAnimationFrame(tick)
+    if (!running && frame) {
       cancelAnimationFrame(frame)
       frame = 0
     }
   }
 
   const resize = () => {
-    grid = measureGrid(section, field)
+    const probe = document.createElement('span')
+    probe.textContent = 'X'.repeat(100)
+    field.append(probe)
+    const cellWidth = probe.getBoundingClientRect().width / 100
+    probe.remove()
+    const cellHeight = parseFloat(getComputedStyle(field).lineHeight)
+    grid = {
+      cols: Math.ceil(container.clientWidth / cellWidth),
+      rows: Math.ceil(container.clientHeight / cellHeight),
+      cellWidth,
+      cellHeight,
+    }
     if (grid.cols === width && grid.rows * 2 === height) return
     width = grid.cols
     height = grid.rows * 2
@@ -93,17 +103,17 @@ export const hero_life = () => {
   }
 
   const toCells = (e: PointerEvent) => {
-    const rect = section.getBoundingClientRect()
+    const rect = container.getBoundingClientRect()
     return {
       x: (e.clientX - rect.left) / grid.cellWidth,
       y: ((e.clientY - rect.top) / grid.cellHeight) * 2,
     }
   }
 
-  section.addEventListener('pointerdown', (e) => {
+  container.addEventListener('pointerdown', (e) => {
     pointer = toCells(e)
   })
-  section.addEventListener('pointermove', (e) => {
+  container.addEventListener('pointermove', (e) => {
     if (pointer) pointer = toCells(e)
   })
   for (const type of ['pointerup', 'pointercancel', 'blur'] as const) {
@@ -112,11 +122,16 @@ export const hero_life = () => {
     })
   }
 
-  new ResizeObserver(resize).observe(section)
+  new ResizeObserver(resize).observe(container)
   document.fonts.ready.then(resize)
 
   new IntersectionObserver(([entry]) => {
     visible = entry.isIntersecting
     updateLoop()
-  }).observe(section)
+  }).observe(container)
+}
+
+// Every <Life /> layer runs its own automaton sized to its parent element.
+export const life = () => {
+  document.querySelectorAll<HTMLElement>('[data-life]').forEach(run)
 }

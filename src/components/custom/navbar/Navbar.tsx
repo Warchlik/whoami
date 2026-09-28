@@ -6,11 +6,12 @@ type NavItem = {
 
 const items = [
   { label: '!Main', href: '#' },
-  { label: '@Exp', href: '#experience' },
-  { label: '#About', href: '#about' },
-  { label: '$Stack', href: '#stack' },
-  { label: '%Repo', href: '#projects' },
-  { label: '^Con', href: '#contact' },
+  { label: '@About', href: '#about' },
+  { label: '#Stack', href: '#stack' },
+  { label: '$Exp', href: '#experience' },
+  // Hidden until the projects section exists; then it becomes '%Repo' and Contact '^Con'.
+  // { label: '%Repo', href: '#projects' },
+  { label: '%Con', href: '#contact' },
 ] as const satisfies NavItem[]
 
 const Navbar = () => {

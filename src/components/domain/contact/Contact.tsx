@@ -10,7 +10,9 @@ type ContactLink = {
 
 const links = [
   { label: 'email', value: 'szymonw.2004@wp.pl', href: 'mailto:szymonw.2004@wp.pl', external: false },
+  { label: 'linkedin', value: 'linkedin.com/in/szymon-wardak-376108335', href: 'https://www.linkedin.com/in/szymon-wardak-376108335/', external: true },
   { label: 'github', value: 'github.com/Warchlik', href: 'https://github.com/Warchlik', external: true },
+  { label: 'cv', value: 'szymon-wardak-cv-pl.pdf', href: '/szymon-wardak-cv-pl.pdf', external: true },
 ] as const satisfies ContactLink[]
 
 const Contact = ({ language }: { language: Language }) => {
@@ -37,9 +39,9 @@ const Contact = ({ language }: { language: Language }) => {
                 class={"group/link flex flex-row items-center gap-4 px-5 py-4 text-sm transition-colors duration-200 hover:bg-gray-800 hover:text-white focus-visible:bg-gray-800 focus-visible:text-white focus-visible:outline-none"}
               >
                 <span class={"size-1.5 shrink-0 bg-current"} />
-                <span class={"w-16 text-gray-400"}>{link.label}</span>
-                <span class={"flex-1 font-bold"}>{link.value}</span>
-                <span class={"transition-transform duration-200 group-hover/link:translate-x-1"}>→</span>
+                <span class={"w-20 shrink-0 text-gray-400"}>{link.label}</span>
+                <span class={"min-w-0 flex-1 font-bold [overflow-wrap:anywhere]"}>{link.value}</span>
+                <span class={"shrink-0 transition-transform duration-200 group-hover/link:translate-x-1"}>→</span>
               </a>
             </li>
           ))}
