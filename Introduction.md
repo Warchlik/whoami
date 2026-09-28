@@ -33,12 +33,12 @@ flowchart LR
   A --> C[routes/web.tsx<br/>GET / → RootPage]
   A --> D[routes/api.ts<br/>GET /api → status ok]
   B --> E[Navbar + CursorDot + PageWrapper]
-  C --> F[features/RootPage.tsx<br/>lista sekcji]
+  C --> F[features/RootPage.tsx<br/>losuje język, lista sekcji]
   B -. ładuje .-> G[src/script.ts<br/>skrypty klienta]
 ```
 
 - **Serwer** renderuje cały HTML: `layout.tsx` owija każdą stronę w `<html>`, dokłada CSS i font, `Navbar`, `CursorDot` i `PageWrapper` (`<main>`).
-- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `hero()` i `experience()`.
+- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `reveal()`, `scroll_progress()`, `hero()` i `experience()`.
 
 ## Struktura
 
@@ -51,26 +51,28 @@ src/
 │   ├── web.tsx                # GET / → <RootPage />
 │   └── api.ts                 # GET /api (health check)
 ├── utils/
-│   └── layout.tsx             # jsxRenderer: szkielet dokumentu
+│   ├── layout.tsx             # jsxRenderer: szkielet dokumentu
+│   └── language.ts            # pula języków (prefiks komentarza) i randomLanguage()
 └── components/
-    ├── base/                  # proste klocki UI (Button)
+    ├── base/                  # proste klocki UI (Button, SectionLabel)
     ├── custom/                # elementy globalne strony
-    │   ├── navbar/            # Navbar.tsx + navbar.ts (motyw jasny/ciemny)
-    │   ├── coursor_dot/       # własny kursor (CursorDot.tsx, cursor_dot.ts, .css)
-    │   └── HugeText.tsx       # nieużywany (imię jest wpisane w Hero)
+    │   ├── navbar/            # Navbar.tsx + navbar.client.ts (motyw jasny/ciemny)
+    │   ├── coursor_dot/       # własny kursor (CursorDot.tsx, cursor_dot.client.ts, .css)
+    │   ├── reveal/            # animacje wjazdu przy scrollu (reveal.client.ts, reveal.css)
+    │   └── scroll_progress/   # pasek postępu u góry (ScrollProgress.tsx + scroll_progress.client.ts)
     ├── domain/                # sekcje strony
     │   ├── PageWrapper.tsx    # <main>
-    │   ├── hero/
+    │   ├── hero/              # Hero.tsx + hero.client.ts (parallax)
     │   ├── about/
     │   ├── stack/
-    │   ├── experience/        # Experience.tsx + experience.ts (karta przy kursorze)
+    │   ├── experience/        # Experience.tsx + experience.client.ts (karta przy kursorze)
     │   ├── contact/
     │   └── projects/          # puste — czeka na projekty
     └── features/
         └── RootPage.tsx       # składa sekcje w kolejności
 ```
 
-Konwencja nazw: `Komponent.tsx` to markup renderowany na serwerze, `komponent.ts` w tym samym folderze to logika klienta, wywoływana w `script.ts`.
+Konwencja nazw: `Komponent.tsx` to markup renderowany na serwerze, `komponent.client.ts` w tym samym folderze to logika klienta, wywoływana w `script.ts`. Sufiks `.client` jest obowiązkowy: macOS nie rozróżnia wielkości liter, a Vite szuka `.ts` przed `.tsx`, więc `hero.ts` obok `Hero.tsx` przechwyciłby import komponentu (błąd 500).
 
 ## Sekcje strony
 
@@ -78,7 +80,7 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 | # | Sekcja | `id` | Tło | `data-nav-theme` | Co zawiera |
 |---|---|---|---|---|---|
-| 1 | Hero | — | białe | `light` | Imię (`text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK ENGINEER` do prawej |
+| 1 | Hero | — | białe | `light` | Prezentacja, nie sekcja (bez etykiety i `h2`). Imię (`text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK SOFTWARE ENGINEER` do prawej |
 | 2 | About | `about` | `gray-800` | `dark` | Nagłówek, 3 zdania o mnie, fakty w pillach (`facts`) |
 | 3 | Stack | `stack` | białe | `light` | Okno „edytora” z drzewem plików: folder = język, plik = technologia (`folders`) |
 | 4 | Experience | `experience` | `gray-800` | `dark` | Płaskie bloki od najnowszego; szczegóły w karcie przy kursorze (`jobs`) |
@@ -90,7 +92,8 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 **Sekcje**
 - Każda sekcja zajmuje co najmniej cały ekran: `min-h-dvh flex items-center`.
 - Treść siedzi w kontenerze `w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8`.
-- Nagłówek sekcji to mały label `// nazwa` (`text-sm text-gray-400`), a pod nim `h2` (`text-3xl md:text-4xl font-bold leading-tight`).
+- Nagłówek sekcji to mały label `<SectionLabel language={language} name="nazwa" />` (`text-sm text-gray-400`), a pod nim `h2` (`text-3xl md:text-4xl font-bold leading-tight`).
+- **Losowy język:** `RootPage` przy każdym renderze woła raz `randomLanguage()` i przekazuje wynik do sekcji (hero go nie dostaje). Etykiety dostają prefiks komentarza tego języka (`# about`, `-- about`, `REM about`…). Nowy język = jedna linijka w `utils/language.ts`.
 - Tła naprzemiennie `bg-white text-gray-800` i `bg-gray-800 text-white`. Każda sekcja **musi** mieć `data-nav-theme="light"` albo `"dark"`, bo inaczej navbar nie przełączy kolorów.
 
 **Styl**
@@ -104,6 +107,7 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 **Interakcje**
 - Element klikalny dostaje `data-hover`, wtedy kropka kursora rośnie nad nim.
+- Animacja wjazdu przy scrollu: `data-reveal` (wjazd od dołu), `data-reveal="fade"` (samo pojawienie się, bez `transform`, np. gdy w środku jest element `fixed`), `data-reveal-group` + `data-reveal-item` (lista po kolei). Nie dawaj tego na `<section>`, bo przesunięcie psuje wykrywanie motywu navbara.
 - Hover w Tailwind v4 działa tylko na urządzeniach z myszką. Zachowanie tylko dla myszki: `pointer-fine:`.
 
 ## Kluczowe komponenty
@@ -113,10 +117,14 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 - **Zwinięty:** płaska kreska (`p-1`) z kwadracikami. **Rozwinięty** (hover albo focus z klawiatury): kwadraciki znikają (`size-0 opacity-0`), pojawiają się etykiety.
 - Etykiety rosną dzięki trikowi z gridem: `grid-cols-[0fr] grid-rows-[0fr]` → `[1fr]`, a na wewnętrznym spanie `min-w-0 min-h-0 overflow-hidden`. CSS nie umie animować do `width: auto`, za to wartości `fr` animować umie.
 - Niewidzialny wrapper z paddingiem (`px-10 pt-5 pb-8`) sprawia, że menu otwiera się już przy zbliżeniu myszki.
-- **Motyw:** `navbar.ts` przy scrollu i resize (najwyżej raz na klatkę, przez `requestAnimationFrame`) sprawdza, która sekcja jest pod środkiem navbara, i ustawia `data-theme` na `<nav>`. Klasy `data-[theme=dark]:bg-white data-[theme=dark]:text-gray-800` odwracają kolory, a kwadraciki (`bg-current`) odwracają się same.
+- **Motyw:** `navbar.client.ts` przy scrollu i resize (najwyżej raz na klatkę, przez `requestAnimationFrame`) sprawdza, która sekcja jest pod środkiem navbara, i ustawia `data-theme` na `<nav>`. Klasy `data-[theme=dark]:bg-white data-[theme=dark]:text-gray-800` odwracają kolory, a kwadraciki (`bg-current`) odwracają się same.
 
 ### Kursor (`custom/coursor_dot/`)
 - Własna kropka `position: fixed`, `mix-blend-mode: difference`, sterowana przez `motion` (sprężyna). Rośnie nad elementami z `data-hover`. Na urządzeniach dotykowych jest wyłączona.
+
+### Hero (`domain/hero/`)
+- `hero.client.ts`: parallax, czyli przy scrollu pierwszego ekranu napis odjeżdża o 120px i znika. Używa `scroll(callback)`, bo `scroll(animate(...))` w `motion` 13.4 ignoruje `offset` dla `y`.
+- Przy `prefers-reduced-motion: reduce` parallax jest wyłączony.
 
 ### Stack (`domain/stack/`)
 - Foldery to natywne `<details open>` / `<summary>`: zwijanie bez JS-a, działa z klawiatury. Strzałka obraca się przez `group-open/folder:rotate-90`.
@@ -125,17 +133,17 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 ### Experience (`domain/experience/`)
 - Blok pokazuje rolę, firmę, okres i jedno zdanie (`summary`).
 - Karta ze szczegółami (`description` + technologie jako klocuszki) jest w HTML-u od początku, co jest dobre dla SEO i czytników ekranu.
-  - **Z myszką** (`pointer-fine:`): karta ma `fixed`, jest ukryta, a `experience.ts` przy hoverze pokazuje ją i przesuwa za kursorem sprężyną `motion`. Przy prawej krawędzi ekranu przeskakuje na lewą stronę kursora, przy dolnej podnosi się.
+  - **Z myszką** (`pointer-fine:`): karta ma `fixed`, jest ukryta, a `experience.client.ts` przy hoverze pokazuje ją i przesuwa za kursorem sprężyną `motion`. Przy prawej krawędzi ekranu przeskakuje na lewą stronę kursora, przy dolnej podnosi się.
   - **Na dotyku:** karta wyświetla się normalnie w bloku, a skrypt się nie odpala.
 
 ## Jak dodać nową sekcję
 
 1. Utwórz `src/components/domain/<nazwa>/<Nazwa>.tsx`.
 2. `<section id="<nazwa>" data-nav-theme="light|dark" class="w-full min-h-dvh flex items-center bg-… text-…">`, tło przeciwne do poprzedniej sekcji.
-3. W środku kontener `max-w-3xl`, label `// <nazwa>` i `h2`, jak w innych sekcjach.
+3. W środku kontener `max-w-3xl`, `<SectionLabel language={language} name="<nazwa>" />` i `h2`, jak w innych sekcjach. Komponent przyjmuje `{ language }: { language: Language }`, a `RootPage` go przekazuje.
 4. Treść w tablicy na górze pliku.
 5. Dodaj komponent w `RootPage.tsx` i ewentualnie pozycję w `items` w `Navbar.tsx`.
-6. Jeśli sekcja potrzebuje JS-a: `<nazwa>.ts` z eksportowaną funkcją, wywołaną w `src/script.ts`.
+6. Jeśli sekcja potrzebuje JS-a: `<nazwa>.client.ts` z eksportowaną funkcją, wywołaną w `src/script.ts`.
 
 ## Otwarte sprawy
 
@@ -143,6 +151,5 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 - [ ] **`<meta name="viewport" content="width=device-width, initial-scale=1">`** w `<head>` w `layout.tsx`. Bez tego telefon renderuje stronę jako desktop ok. 980px, pomniejszoną.
 - [ ] **Kolejność w navbarze:** `@Exp` stoi przed `#About`, a na stronie Experience jest po Stacku.
 - [ ] **`tsconfig.json`**: `"lib": ["ESNext"]` bez `"DOM"`, więc LSP zgłasza błędy `window` / `document` w plikach `.ts` klienta. Vite buduje mimo to.
-- [ ] **`HugeText.tsx`** jest nieużywany: usunąć albo wrócić do niego w Hero.
-- [ ] `projects.ts` i `Projects.tsx` są puste. `hero.ts` eksportuje pustą funkcję `hero()`, która i tak jest wywoływana w `script.ts`.
+- [ ] `projects.client.ts` i `Projects.tsx` są puste.
 - [ ] Stopka: w `layout.tsx` jest tylko komentarz `{/* Footer component */}`.

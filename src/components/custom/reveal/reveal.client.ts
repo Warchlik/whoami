@@ -1,7 +1,6 @@
 import { animate, inView, stagger } from 'motion'
 
 const SLIDE = { opacity: [0, 1], y: [24, 0] }
-// Opacity only: a transform on an ancestor would break `position: fixed` descendants (e.g. data-exp-card).
 const FADE = { opacity: [0, 1] }
 const OPTIONS = { duration: 0.6, ease: [0.22, 1, 0.36, 1] } as const
 

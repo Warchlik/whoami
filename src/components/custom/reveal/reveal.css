@@ -1,4 +1,3 @@
-/* Hidden until reveal.client.ts animates them in; avoids a flash of content before the script loads. */
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal],
   [data-reveal-item] {

@@ -10,7 +10,6 @@ const SectionLabel = ({ language, name }: SectionLabelProps) => {
     <span data-reveal title={language.name} class={"text-sm text-gray-400"}>
       <span aria-hidden="true">{language.prefix} </span>
       {name}
-      {language.suffix && <span aria-hidden="true"> {language.suffix}</span>}
     </span>
   )
 }

@@ -5,7 +5,6 @@ import CursorDot from '../components/custom/coursor_dot/CursorDot'
 
 import jetbrainsMonoUrl from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url'
 import Navbar from '../components/custom/navbar/Navbar'
-import ScrollProgress from '../components/custom/scroll_progress/ScrollProgress'
 
 export const layout = jsxRenderer(({ children }) => {
   return (
@@ -27,7 +26,7 @@ export const layout = jsxRenderer(({ children }) => {
       <body class={"bg-white font-mono"}>
         <CursorDot />
         <Navbar />
-        <ScrollProgress />
+        {/* <ScrollProgress /> */}
         <PageWrapper>
           {children}
         </PageWrapper>
