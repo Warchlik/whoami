@@ -1,3 +1,6 @@
+import type { Language } from "../../../utils/language"
+import SectionLabel from "../../base/SectionLabel"
+
 type Folder = {
   name: string
   files: string[]
@@ -10,17 +13,17 @@ const folders = [
   { name: 'php', files: ['laravel.php', 'yii2.php'] },
 ] as const satisfies Folder[]
 
-const Stack = () => {
+const Stack = ({ language }: { language: Language }) => {
   return (
     <section id="stack" data-nav-theme="light" class={"w-full min-h-dvh flex items-center bg-white text-gray-800"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <span class={"text-sm text-gray-400"}>// stack</span>
+        <SectionLabel language={language} name="stack" />
 
-        <h2 class={"text-3xl md:text-4xl font-bold leading-tight"}>
+        <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
           Languages I work in, and what I build with them.
         </h2>
 
-        <div class={"border border-gray-800 text-sm"}>
+        <div data-reveal class={"border border-gray-800 text-sm"}>
           <div class={"flex flex-row items-center gap-3 bg-gray-800 text-white px-4 py-2"}>
             <span class={"flex flex-row gap-1.5"}>
               <span class={"size-1.5 bg-current"} />
@@ -33,9 +36,9 @@ const Stack = () => {
           <div class={"p-4"}>
             <span class={"text-gray-400"}>EXPLORER</span>
 
-            <ul class={"mt-3 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1"}>
+            <ul data-reveal-group class={"mt-3 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-1"}>
               {folders.map((folder) => (
-                <li>
+                <li data-reveal-item>
                   <details open class={"group/folder"}>
                     <summary
                       data-hover

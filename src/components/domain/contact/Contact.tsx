@@ -1,3 +1,6 @@
+import type { Language } from "../../../utils/language"
+import SectionLabel from "../../base/SectionLabel"
+
 type ContactLink = {
   label: string
   value: string
@@ -10,23 +13,23 @@ const links = [
   { label: 'github', value: 'github.com/Warchlik', href: 'https://github.com/Warchlik', external: true },
 ] as const satisfies ContactLink[]
 
-const Contact = () => {
+const Contact = ({ language }: { language: Language }) => {
   return (
     <section id="contact" data-nav-theme="light" class={"w-full min-h-dvh flex items-center bg-white text-gray-800"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <span class={"text-sm text-gray-400"}>// contact</span>
+        <SectionLabel language={language} name="contact" />
 
-        <h2 class={"text-3xl md:text-4xl font-bold leading-tight"}>
+        <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
           Got a project or a role in mind? Let's talk.
         </h2>
 
-        <p class={"max-w-xl text-gray-600 leading-relaxed"}>
+        <p data-reveal class={"max-w-xl text-gray-600 leading-relaxed"}>
           Open to full-time roles and freelance work. Email is the fastest way to reach me.
         </p>
 
-        <ul class={"flex flex-col border border-gray-800"}>
+        <ul data-reveal-group class={"flex flex-col border border-gray-800"}>
           {links.map((link) => (
-            <li class={"border-b border-gray-800 last:border-b-0"}>
+            <li data-reveal-item class={"border-b border-gray-800 last:border-b-0"}>
               <a
                 href={link.href}
                 data-hover

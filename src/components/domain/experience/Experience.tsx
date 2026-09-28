@@ -1,3 +1,6 @@
+import type { Language } from "../../../utils/language"
+import SectionLabel from "../../base/SectionLabel"
+
 type Job = {
   role: string
   company: string
@@ -29,13 +32,13 @@ const jobs = [
   },
 ] as const satisfies Job[]
 
-const Experience = () => {
+const Experience = ({ language }: { language: Language }) => {
   return (
     <section id="experience" data-nav-theme="dark" class={"w-full min-h-dvh flex items-center bg-gray-800 text-white"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <span class={"text-sm text-gray-400"}>// experience</span>
+        <SectionLabel language={language} name="experience" />
 
-        <h2 class={"text-3xl md:text-4xl font-bold leading-tight"}>
+        <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
           Where I've been shipping code.
         </h2>
 
@@ -43,6 +46,7 @@ const Experience = () => {
           {jobs.map((job) => (
             <article
               data-exp-block
+              data-reveal="fade"
               data-hover
               class={"flex flex-col gap-2 border border-white/10 bg-white/5 p-6 transition-colors duration-200 hover:bg-white/10"}
             >
