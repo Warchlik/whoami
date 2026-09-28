@@ -9,8 +9,6 @@ export const hero = () => {
   const title = section?.querySelector<HTMLElement>('[data-hero-title]')
   if (!section || !title) return
 
-  // Animate the inner title only; the section itself must stay put for navbar theme detection.
-  // Callback form on purpose: scroll(animate(...)) in motion 13.4 ignores `offset` for the JS-driven `y`.
   scroll((progress: number) => {
     title.style.transform = `translateY(${-MAX_SHIFT * progress}px)`
     title.style.opacity = String(1 - progress)

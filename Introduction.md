@@ -38,7 +38,7 @@ flowchart LR
 ```
 
 - **Serwer** renderuje cały HTML: `layout.tsx` owija każdą stronę w `<html>`, dokłada CSS i font, `Navbar`, `CursorDot` i `PageWrapper` (`<main>`).
-- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `reveal()`, `scroll_progress()`, `hero()` i `experience()`.
+- **Klient** dostaje jeden skrypt, `src/script.ts`, który odpala interakcje: `cursor_dot()`, `navbar()`, `reveal()`, `hero()`, `hero_field()`, `hero_life()` i `experience()` (`scroll_progress()` jest na razie wyłączone).
 
 ## Struktura
 
@@ -62,7 +62,7 @@ src/
     │   └── scroll_progress/   # pasek postępu u góry (ScrollProgress.tsx + scroll_progress.client.ts)
     ├── domain/                # sekcje strony
     │   ├── PageWrapper.tsx    # <main>
-    │   ├── hero/              # Hero.tsx + hero.client.ts (parallax)
+    │   ├── hero/              # Hero.tsx + hero.client.ts (parallax) + tła ASCII: hero_life / hero_field (.client.ts), ascii_grid.client.ts
     │   ├── about/
     │   ├── stack/
     │   ├── experience/        # Experience.tsx + experience.client.ts (karta przy kursorze)
@@ -80,7 +80,7 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 | # | Sekcja | `id` | Tło | `data-nav-theme` | Co zawiera |
 |---|---|---|---|---|---|
-| 1 | Hero | — | białe | `light` | Prezentacja, nie sekcja (bez etykiety i `h2`). Imię (`text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK SOFTWARE ENGINEER` do prawej |
+| 1 | Hero | — | białe | `light` | Prezentacja, nie sekcja (bez etykiety i `h2`). Imię (`text-8xl`), nad nim `AKA OCG / AKA WARCHLIK` wyrównane do lewej krawędzi imienia, pod nim `FULL STACK SOFTWARE ENGINEER` do prawej. W tle Gra w życie w ASCII |
 | 2 | About | `about` | `gray-800` | `dark` | Nagłówek, 3 zdania o mnie, fakty w pillach (`facts`) |
 | 3 | Stack | `stack` | białe | `light` | Okno „edytora” z drzewem plików: folder = język, plik = technologia (`folders`) |
 | 4 | Experience | `experience` | `gray-800` | `dark` | Płaskie bloki od najnowszego; szczegóły w karcie przy kursorze (`jobs`) |
@@ -125,6 +125,9 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 ### Hero (`domain/hero/`)
 - `hero.client.ts`: parallax, czyli przy scrollu pierwszego ekranu napis odjeżdża o 120px i znika. Używa `scroll(callback)`, bo `scroll(animate(...))` w `motion` 13.4 ignoruje `offset` dla `y`.
 - Przy `prefers-reduced-motion: reduce` parallax jest wyłączony.
+- Tła ASCII: każde to `<pre data-…>` na całe hero (`absolute inset-0`, `pointer-events-none`, `aria-hidden`) plus skrypt `.client.ts`, który wraca od razu, jeśli nie znajdzie swojego `<pre>`. Wspólny pomiar siatki znaków: `ascii_grid.client.ts` (`measureGrid`), wołany przy zmianie rozmiaru i po załadowaniu fontu. Włączone tło wybierasz w `Hero.tsx`, odkomentowując odpowiedni `<pre>`.
+  - **Aktywne:** `hero_life.client.ts` → `<pre data-hero-life>`. Gra w życie w podwójnej rozdzielczości, port „Golgol” (`gol_double_res`) z [play.core](https://github.com/ertdfgcvb/play.core) (Apache-2.0). Każdy znak to dwie komórki jedna nad drugą (`█ ▀ ▄` i spacja). Start z losowego stanu, krok co `1000 / FPS` ms (`FPS = 30`), przytrzymanie i przeciągnięcie myszką/palcem sieje losowy kwadrat 11×11. Pętla staje, gdy hero jest poza ekranem; przy `prefers-reduced-motion: reduce` zostaje jedna nieruchoma klatka.
+  - **Zakomentowane:** `hero_field.client.ts` → `<pre data-hero-field>`. Port „Two circles” z play.core: koło na środku zlewa się z kołem pod kursorem, znaki `#WX?*:÷×+=-· ` zależnie od odległości od kształtu. Rysuje się tylko po ruchu kursora.
 
 ### Stack (`domain/stack/`)
 - Foldery to natywne `<details open>` / `<summary>`: zwijanie bez JS-a, działa z klawiatury. Strzałka obraca się przez `group-open/folder:rotate-90`.
@@ -147,8 +150,12 @@ Kolejność z `RootPage.tsx`. Tła idą naprzemiennie: jasne, ciemne.
 
 ## Otwarte sprawy
 
-- [ ] **Sekcja Repo** (`#projects`): czeka na skończone projekty. Po Contact (jasnym) wypada ciemna, a jeśli wejdzie przed Contact, trzeba przestawić tła.
+- [ ] **Sekcja Repo** (`#projects`): czeka na skończone projekty. Po Contact (jasnym) wypada ciemna, a jeśli wejdzie przed Contact, trzeba przestawić tła. Do tego czasu `%Repo` w navbarze prowadzi donikąd: dodać choć 2–3 projekty albo schować tę pozycję.
 - [ ] **`<meta name="viewport" content="width=device-width, initial-scale=1">`** w `<head>` w `layout.tsx`. Bez tego telefon renderuje stronę jako desktop ok. 980px, pomniejszoną.
+- [ ] **Imię w hero na telefonie:** stałe `text-8xl` (96px) nie mieści się na wąskim ekranie. Potrzebny rozmiar responsywny, np. `text-5xl md:text-8xl`.
+- [ ] **Brak `h1`:** imię w `Hero.tsx` to `<span>`. Zamiana na `<h1>` (te same klasy) nie zmienia wyglądu, a daje stronie główny nagłówek dla wyszukiwarek i czytników ekranu.
+- [ ] **`<title>` i opis strony:** w `<head>` w `layout.tsx` nie ma `<title>` ani `<meta name="description">`. Karta w przeglądarce nie ma nazwy, a Google nie ma opisu.
+- [ ] **Podgląd linku (Open Graph):** brak `og:title`, `og:description`, `og:image`, więc po wklejeniu linku na LinkedIn / Slack / Messenger nie pojawia się ładna karta z tytułem i obrazkiem.
 - [ ] **Kolejność w navbarze:** `@Exp` stoi przed `#About`, a na stronie Experience jest po Stacku.
 - [ ] **`tsconfig.json`**: `"lib": ["ESNext"]` bez `"DOM"`, więc LSP zgłasza błędy `window` / `document` w plikach `.ts` klienta. Vite buduje mimo to.
 - [ ] `projects.client.ts` i `Projects.tsx` są puste.
