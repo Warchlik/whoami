@@ -1,4 +1,5 @@
-import type { Language } from "../../../utils/language"
+import type { CodeLanguage } from "../../../utils/code_language"
+import type { Dictionary } from "../../../i18n"
 import SectionLabel from "../../base/SectionLabel"
 
 type ContactLink = {
@@ -12,25 +13,26 @@ const links = [
   { label: 'email', value: 'szymonw.2004@wp.pl', href: 'mailto:szymonw.2004@wp.pl', external: false },
   { label: 'linkedin', value: 'linkedin.com/in/szymon-wardak-376108335', href: 'https://www.linkedin.com/in/szymon-wardak-376108335/', external: true },
   { label: 'github', value: 'github.com/Warchlik', href: 'https://github.com/Warchlik', external: true },
-  { label: 'cv', value: 'szymon-wardak-cv-pl.pdf', href: '/szymon-wardak-cv-pl.pdf', external: true },
 ] as const satisfies ContactLink[]
 
-const Contact = ({ language }: { language: Language }) => {
+const Contact = ({ codeLanguage, t }: { codeLanguage: CodeLanguage; t: Dictionary['contact'] }) => {
+  const rows: ContactLink[] = [...links, { label: 'cv', value: t.cv, href: `/${t.cv}`, external: true }]
+
   return (
     <section id="contact" data-nav-theme="light" class={"w-full min-h-dvh flex items-center bg-white text-gray-800"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <SectionLabel language={language} name="contact" />
+        <SectionLabel codeLanguage={codeLanguage} name={t.label} />
 
         <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
-          Got a project or a role in mind? Let's talk.
+          {t.heading}
         </h2>
 
         <p data-reveal class={"max-w-xl text-gray-600 leading-relaxed"}>
-          Open to full-time roles and freelance work. Email is the fastest way to reach me.
+          {t.body}
         </p>
 
         <ul data-reveal-group class={"flex flex-col border border-gray-800"}>
-          {links.map((link) => (
+          {rows.map((link) => (
             <li data-reveal-item class={"border-b border-gray-800 last:border-b-0"}>
               <a
                 href={link.href}

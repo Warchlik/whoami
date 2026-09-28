@@ -1,14 +1,14 @@
-import type { Language } from "../../utils/language"
+import type { CodeLanguage } from "../../utils/code_language"
 
 type SectionLabelProps = {
-  language: Language
+  codeLanguage: CodeLanguage
   name: string
 }
 
-const SectionLabel = ({ language, name }: SectionLabelProps) => {
+const SectionLabel = ({ codeLanguage, name }: SectionLabelProps) => {
   return (
-    <span data-reveal title={language.name} class={"text-sm text-gray-400"}>
-      <span aria-hidden="true">{language.prefix} </span>
+    <span data-reveal title={codeLanguage.name} class={"text-sm text-gray-400"}>
+      <span aria-hidden="true">{codeLanguage.prefix} </span>
       {name}
     </span>
   )

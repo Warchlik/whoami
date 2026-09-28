@@ -1,49 +1,19 @@
-import type { Language } from "../../../utils/language"
+import type { CodeLanguage } from "../../../utils/code_language"
+import type { Dictionary } from "../../../i18n"
 import SectionLabel from "../../base/SectionLabel"
 
-type Job = {
-  role: string
-  company: string
-  period: string
-  summary: string
-  description: string
-  tags: string[]
-}
-
-// Newest first.
-const jobs = [
-  {
-    role: 'Full Stack Software Developer',
-    company: 'CodeFellow',
-    period: '2024 — Present',
-    summary: 'SaaS & CRM systems, moving step by step to microservices.',
-    description:
-      'Developing and maintaining SaaS and CRM systems while migrating them step by step to microservices. Building new business features in PHP and Python, optimizing MySQL/PostgreSQL queries and refactoring legacy code. Designing REST APIs, tuning scraping algorithms and shipping React frontends. Containerizing dev and production environments with Docker and administering Linux servers.',
-    tags: ['PHP', 'Python', 'React', 'MySQL', 'PostgreSQL', 'Docker', 'Linux'],
-  },
-  {
-    role: 'Full Stack Software Developer',
-    company: 'Freelance',
-    period: '2024 — Present',
-    summary: 'Custom web apps, and the servers they run on.',
-    description:
-      'Designing and shipping custom web applications with React/Next.js on the front and Python/PHP on the back. Setting up and securing Linux VPS servers with Nginx, and automating ops with bash scripts and cron.',
-    tags: ['React', 'Next.js', 'Python', 'PHP', 'Nginx', 'Linux', 'Bash'],
-  },
-] as const satisfies Job[]
-
-const Experience = ({ language }: { language: Language }) => {
+const Experience = ({ codeLanguage, t }: { codeLanguage: CodeLanguage; t: Dictionary['experience'] }) => {
   return (
     <section id="experience" data-nav-theme="dark" class={"w-full min-h-dvh flex items-center bg-gray-800 text-white"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <SectionLabel language={language} name="experience" />
+        <SectionLabel codeLanguage={codeLanguage} name={t.label} />
 
         <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
-          Where I've been shipping code.
+          {t.heading}
         </h2>
 
         <div class={"flex flex-col gap-4"}>
-          {jobs.map((job) => (
+          {t.jobs.map((job) => (
             <article
               data-exp-block
               data-reveal="fade"
@@ -59,7 +29,6 @@ const Experience = ({ language }: { language: Language }) => {
 
               <p class={"text-sm text-gray-400"}>{job.summary}</p>
 
-              {/* Details card. With a mouse it floats next to the cursor (see experience.ts); on touch screens it stays inline. */}
               <div
                 data-exp-card
                 class={"mt-2 flex flex-col gap-4 pointer-fine:fixed pointer-fine:top-0 pointer-fine:left-0 pointer-fine:z-40 pointer-fine:mt-0 pointer-fine:w-96 pointer-fine:border pointer-fine:border-gray-800 pointer-fine:bg-white pointer-fine:p-5 pointer-fine:text-gray-800 pointer-fine:opacity-0 pointer-fine:pointer-events-none"}

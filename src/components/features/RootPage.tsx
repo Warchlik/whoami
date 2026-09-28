@@ -3,18 +3,20 @@ import Contact from "../domain/contact/Contact"
 import Experience from "../domain/experience/Experience"
 import Hero from "../domain/hero/Hero"
 import Stack from "../domain/stack/Stack"
-import { randomLanguage } from "../../utils/language"
+import { randomCodeLanguage } from "../../utils/code_language"
+import { dictionaries, type Locale } from "../../i18n"
 
-const RootPage = () => {
-  const language = randomLanguage()
+const RootPage = ({ locale }: { locale: Locale }) => {
+  const t = dictionaries[locale]
+  const codeLanguage = randomCodeLanguage()
 
   return (
     <>
       <Hero />
-      <About language={language} />
-      <Stack language={language} />
-      <Experience language={language} />
-      <Contact language={language} />
+      <About codeLanguage={codeLanguage} t={t.about} />
+      <Stack codeLanguage={codeLanguage} t={t.stack} />
+      <Experience codeLanguage={codeLanguage} t={t.experience} />
+      <Contact codeLanguage={codeLanguage} t={t.contact} />
     </>
   )
 }

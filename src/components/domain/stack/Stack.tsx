@@ -1,4 +1,5 @@
-import type { Language } from "../../../utils/language"
+import type { CodeLanguage } from "../../../utils/code_language"
+import type { Dictionary } from "../../../i18n"
 import SectionLabel from "../../base/SectionLabel"
 
 type Folder = {
@@ -13,14 +14,14 @@ const folders = [
   { name: 'php', files: ['laravel.php', 'yii2.php'] },
 ] as const satisfies Folder[]
 
-const Stack = ({ language }: { language: Language }) => {
+const Stack = ({ codeLanguage, t }: { codeLanguage: CodeLanguage; t: Dictionary['stack'] }) => {
   return (
     <section id="stack" data-nav-theme="light" class={"w-full min-h-dvh flex items-center bg-white text-gray-800"}>
       <div class={"w-full max-w-3xl mx-auto px-6 py-32 flex flex-col gap-8"}>
-        <SectionLabel language={language} name="stack" />
+        <SectionLabel codeLanguage={codeLanguage} name={t.label} />
 
         <h2 data-reveal class={"text-3xl md:text-4xl font-bold leading-tight"}>
-          Languages I work in, and what I build with them.
+          {t.heading}
         </h2>
 
         <div data-reveal class={"border border-gray-800 text-sm"}>
