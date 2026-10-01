@@ -1,14 +1,17 @@
 import { localePath, type Dictionary, type Locale } from '../../i18n'
 import Life from '../custom/life/Life'
 
-type ErrorPageProps = {
+const ErrorPage = ({
+  locale,
+  status,
+  path,
+  t
+}: {
   locale: Locale
   status: 404 | 500
   path: string
   t: Dictionary['errors']
-}
-
-const ErrorPage = ({ locale, status, path, t }: ErrorPageProps) => {
+}) => {
   const e = t[status]
   return (
     <section class="relative overflow-hidden flex flex-col min-h-dvh justify-center items-center px-6">

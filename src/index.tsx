@@ -19,20 +19,26 @@ app.use(
   }),
 )
 
-// app.route('/', web)
+app.route('/', web)
 app.route('/api', api)
 
 app.notFound((c) => {
   const locale = toLocale(c.get('language'))
   c.status(404)
-  return c.render(<ErrorPage status={404} locale={locale} path={c.req.path} t={dictionaries[locale].errors} />)
+  return c.render(<ErrorPage status={404} locale={locale} path={c.req.path} t={dictionaries[locale].errors} />, {
+    navbar: false,
+    footer: false,
+  })
 })
 
 app.onError((err, c) => {
   console.error(err)
   const locale = toLocale(c.get('language'))
   c.status(500)
-  return c.render(<ErrorPage status={500} locale={locale} path={c.req.path} t={dictionaries[locale].errors} />)
+  return c.render(<ErrorPage status={500} locale={locale} path={c.req.path} t={dictionaries[locale].errors} />, {
+    navbar: false,
+    footer: false,
+  })
 })
 
 export default app

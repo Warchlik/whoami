@@ -7,7 +7,14 @@ import Navbar from '../components/global/navbar/Navbar'
 import PageWrapper from '../components/domain/PageWrapper'
 import { DEFAULT_LOCALE, dictionaries, LOCALES, localePath, toLocale } from '../i18n'
 
-export const layout = jsxRenderer(({ children }) => {
+declare module 'hono' {
+  interface ContextRenderer {
+    (content: string | Promise<string>, props?: { navbar?: boolean, footer?: boolean }): Response | Promise<Response>
+  }
+}
+
+
+export const layout = jsxRenderer(({ children, navbar = true, footer = true }) => {
   const c = useRequestContext()
   const locale = toLocale(c.get('language'))
   const t = dictionaries[locale]
@@ -32,9 +39,9 @@ export const layout = jsxRenderer(({ children }) => {
       </head>
       <body class={'bg-white font-mono'}>
         <CursorDot />
-        <Navbar locale={locale} t={t.nav} />
+        {navbar && <Navbar locale={locale} t={t.nav} />}
         <PageWrapper>{children}</PageWrapper>
-        <Footer />
+        {footer && <Footer />}
       </body>
       <Script src="/src/script.ts" />
     </html>
