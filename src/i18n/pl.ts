@@ -10,7 +10,7 @@ const pl: Dictionary = {
     main: 'Start',
     about: 'O mnie',
     stack: 'Stack',
-    experience: 'Dośw',
+    experience: 'Doświadczenie',
     contact: 'Kontakt',
   },
   about: {
@@ -56,11 +56,11 @@ const pl: Dictionary = {
   errors: {
     404: {
       cmd: (path: string) => `cd ${path}`,
-      err: (path: string) => `bash: Nie ma takiego strony ani trasy`,
+      err: 'bash: Nie ma takiej strony ani trasy',
     },
     500: {
       cmd: (path: string) => `curl ${path}`,
-      err: () => 'Naruszenie ochrony pamięci (zrzut pamięci). Spróbuj ponownie za chwilę.',
+      err: 'Naruszenie ochrony pamięci (zrzut pamięci). Spróbuj ponownie za chwilę.',
     },
   },
   footer: {},

@@ -8,8 +8,8 @@ const en = {
     main: 'Main',
     about: 'About',
     stack: 'Stack',
-    experience: 'Exp',
-    contact: 'Con',
+    experience: 'Experience',
+    contact: 'Contact',
   },
   about: {
     label: 'about',
@@ -54,11 +54,11 @@ const en = {
   errors: {
     404: {
       cmd: (path: string) => `cd ${path}`,
-      err: (path: string) => `bash: No such page or route`,
+      err: 'bash: No such page or route',
     },
     500: {
       cmd: (path: string) => `curl ${path}`,
-      err: () => 'Segmentation fault (core dumped). Try again in a moment.',
+      err: 'Segmentation fault (core dumped). Try again in a moment.',
     },
   },
   footer: {},

@@ -21,7 +21,7 @@ const ErrorPage = ({
       </div>
       <div class="relative mt-12 w-full max-w-md bg-white/90 border border-gray-200 p-4 text-sm">
         <div><span class="text-gray-400">$</span> {e.cmd(path)}</div>
-        <div class="text-gray-500">{e.err(path)}</div>
+        <div class="text-gray-500">{e.err}</div>
       </div>
       <a href={localePath(locale)} data-hover class="relative mt-6 px-4 py-2 bg-gray-800 text-white">cd ~/</a>
     </section>

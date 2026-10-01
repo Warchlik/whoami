@@ -9,6 +9,7 @@ import { DEFAULT_LOCALE, dictionaries, LOCALES, localePath, toLocale } from '../
 
 declare module 'hono' {
   interface ContextRenderer {
+    // biome-ignore lint/style/useShorthandFunctionType: module augmentation must be an interface to merge with Hono's ContextRenderer
     (content: string | Promise<string>, props?: { navbar?: boolean, footer?: boolean }): Response | Promise<Response>
   }
 }
@@ -42,8 +43,8 @@ export const layout = jsxRenderer(({ children, navbar = true, footer = true }) =
         {navbar && <Navbar locale={locale} t={t.nav} />}
         <PageWrapper>{children}</PageWrapper>
         {footer && <Footer />}
+        <Script src="/src/script.ts" />
       </body>
-      <Script src="/src/script.ts" />
     </html>
   )
 })
