@@ -13,9 +13,9 @@ const Hero = () => {
     >
       <Life class={'text-gray-400'} />
       <div data-hero-title class={'relative flex flex-col'}>
-        <span class={'self-start text-xs text-gray-400'}>{NICK_NAMES}</span>
+        <span class={'self-start text-xs font-semibold text-gray-700'}>{NICK_NAMES}</span>
         <h1 class={'text-4xl sm:text-6xl lg:text-8xl font-bold text-gray-900'}>{PROGRAMMER_NAME}</h1>
-        <span class={'self-end text-xs text-gray-400'}>{LABEL}</span>
+        <span class={'self-end text-xs text-gray-700 font-semibold'}>{LABEL}</span>
       </div>
     </section>
   )
