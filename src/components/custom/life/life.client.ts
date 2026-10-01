@@ -27,7 +27,7 @@ const run = (field: HTMLElement) => {
       for (let x = 0; x < width; x++) {
         const upper = cells[upperRow + x]
         const lower = cells[lowerRow + x]
-        out += upper ? (lower ? '█' : '▀') : (lower ? '▄' : ' ')
+        out += upper ? (lower ? '█' : '▀') : lower ? '▄' : ' '
       }
       out += '\n'
     }

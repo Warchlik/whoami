@@ -1,12 +1,11 @@
+import jetbrainsMonoUrl from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url'
 import { jsxRenderer, useRequestContext } from 'hono/jsx-renderer'
 import { Link, Script, ViteClient } from 'vite-ssr-components/hono'
-import PageWrapper from '../components/domain/PageWrapper'
 import CursorDot from '../components/custom/coursor_dot/CursorDot'
-
-import jetbrainsMonoUrl from '@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2?url'
-import Navbar from '../components/custom/navbar/Navbar'
 import Footer from '../components/custom/footer/Footer'
-import { DEFAULT_LOCALE, LOCALES, dictionaries, localePath, toLocale } from '../i18n'
+import Navbar from '../components/custom/navbar/Navbar'
+import PageWrapper from '../components/domain/PageWrapper'
+import { DEFAULT_LOCALE, dictionaries, LOCALES, localePath, toLocale } from '../i18n'
 
 export const layout = jsxRenderer(({ children }) => {
   const c = useRequestContext()
@@ -28,29 +27,16 @@ export const layout = jsxRenderer(({ children }) => {
         <link rel="alternate" hreflang="x-default" href={new URL(localePath(DEFAULT_LOCALE), c.req.url).href} />
 
         <ViteClient />
-        <Link
-          href="/src/style.css"
-          rel="stylesheet"
-        />
-        <Link
-          rel="preload"
-          href={jetbrainsMonoUrl}
-          as="font"
-          type="font/woff2"
-          crossorigin="anonymous"
-        />
+        <Link href="/src/style.css" rel="stylesheet" />
+        <Link rel="preload" href={jetbrainsMonoUrl} as="font" type="font/woff2" crossorigin="anonymous" />
       </head>
-      <body class={"bg-white font-mono"}>
+      <body class={'bg-white font-mono'}>
         <CursorDot />
         <Navbar locale={locale} t={t.nav} />
-        <PageWrapper>
-          {children}
-        </PageWrapper>
+        <PageWrapper>{children}</PageWrapper>
         <Footer t={t.footer} />
       </body>
-      <Script
-        src='/src/script.ts'
-      />
+      <Script src="/src/script.ts" />
     </html>
   )
 })

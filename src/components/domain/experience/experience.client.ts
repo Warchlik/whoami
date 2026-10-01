@@ -14,9 +14,7 @@ export const experience = () => {
     const position = (e: MouseEvent) => {
       const width = card.offsetWidth
       const height = card.offsetHeight
-      const x = e.clientX + OFFSET + width > window.innerWidth - EDGE
-        ? e.clientX - OFFSET - width
-        : e.clientX + OFFSET
+      const x = e.clientX + OFFSET + width > window.innerWidth - EDGE ? e.clientX - OFFSET - width : e.clientX + OFFSET
       const y = Math.min(e.clientY + OFFSET, window.innerHeight - height - EDGE)
       return { x, y }
     }

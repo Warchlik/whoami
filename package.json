@@ -7,7 +7,13 @@
     "preview": "$npm_execpath run build && vite preview",
     "deploy": "$npm_execpath run build && wrangler deploy",
     "typecheck": "tsc -b",
-    "typegen": "wrangler types --env-interface CloudflareBindings"
+    "typegen": "wrangler types --env-interface CloudflareBindings",
+
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "check": "biome check .",
+    "check:fix": "biome check --write .",
+    "verify": "biome ci . && tsc -b"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

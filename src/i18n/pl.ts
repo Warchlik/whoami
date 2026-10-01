@@ -53,9 +53,7 @@ const pl: Dictionary = {
     body: 'Jestem otwarty na pracę na etat i zlecenia freelance. Najszybciej złapiesz mnie mailowo.',
     cv: 'szymon-wardak-cv-pl.pdf',
   },
-  footer: {
-    builtWith: 'zbudowane na hono · cloudflare workers',
-  },
+  footer: {},
 }
 
 export default pl

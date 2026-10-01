@@ -24,7 +24,6 @@ const en = {
   experience: {
     label: 'experience',
     heading: "Where I've been shipping code.",
-    // Newest first.
     jobs: [
       {
         role: 'Full Stack Software Developer',
@@ -50,12 +49,9 @@ const en = {
     label: 'contact',
     heading: "Got a project or a role in mind? Let's talk.",
     body: 'Open to full-time roles and freelance work. Email is the fastest way to reach me.',
-    // File in public/, linked as the "cv" row.
     cv: 'szymon-wardak-cv-en.pdf',
   },
-  footer: {
-    builtWith: 'built with hono · cloudflare workers',
-  },
+  footer: {},
 }
 
 export type Dictionary = typeof en

@@ -1,10 +1,10 @@
-import About from "../domain/about/About"
-import Contact from "../domain/contact/Contact"
-import Experience from "../domain/experience/Experience"
-import Hero from "../domain/hero/Hero"
-import Stack from "../domain/stack/Stack"
-import { randomCodeLanguage } from "../../utils/code_language"
-import { dictionaries, type Locale } from "../../i18n"
+import { dictionaries, type Locale } from '../../i18n'
+import { randomCodeLanguage } from '../../utils/code_language'
+import About from '../domain/about/About'
+import Contact from '../domain/contact/Contact'
+import Experience from '../domain/experience/Experience'
+import Hero from '../domain/hero/Hero'
+import Stack from '../domain/stack/Stack'
 
 const RootPage = ({ locale }: { locale: Locale }) => {
   const t = dictionaries[locale]

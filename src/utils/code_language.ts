@@ -12,5 +12,4 @@ const CODE_LANGUAGES = [
   { name: 'batch', prefix: 'REM' },
 ] as const satisfies CodeLanguage[]
 
-export const randomCodeLanguage = (): CodeLanguage =>
-  CODE_LANGUAGES[Math.floor(Math.random() * CODE_LANGUAGES.length)]
+export const randomCodeLanguage = (): CodeLanguage => CODE_LANGUAGES[Math.floor(Math.random() * CODE_LANGUAGES.length)]

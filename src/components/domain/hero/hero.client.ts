@@ -9,8 +9,11 @@ export const hero = () => {
   const title = section?.querySelector<HTMLElement>('[data-hero-title]')
   if (!section || !title) return
 
-  scroll((progress: number) => {
-    title.style.transform = `translateY(${-MAX_SHIFT * progress}px)`
-    title.style.opacity = String(1 - progress)
-  }, { target: section, offset: ['start start', 'end start'] })
+  scroll(
+    (progress: number) => {
+      title.style.transform = `translateY(${-MAX_SHIFT * progress}px)`
+      title.style.opacity = String(1 - progress)
+    },
+    { target: section, offset: ['start start', 'end start'] },
+  )
 }
