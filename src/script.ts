@@ -1,4 +1,4 @@
-import { cursor_dot } from './components/custom/coursor_dot/cursor_dot.client'
+import { cursor_dot } from './components/custom/cursor_dot/cursor_dot.client'
 import { life } from './components/custom/life/life.client'
 import { navbar } from './components/global/navbar/navbar.client'
 import { reveal } from './components/custom/reveal/reveal.client'

@@ -1,8 +1,8 @@
 import Life from '../../custom/life/Life'
 
-const PROGRAMER_NAME = 'Szymon Wardak' satisfies string
-const LABEL = 'FULL STACK SOFTWARE ENGINEER' satisfies string
-const NICK_NAMES = 'AKA OCG / AKA WARCHLIK' satisfies string
+const PROGRAMMER_NAME = 'Szymon Wardak'
+const LABEL = 'FULL STACK SOFTWARE ENGINEER'
+const NICK_NAMES = 'AKA OCG / AKA WARCHLIK'
 
 const Hero = () => {
   return (
@@ -14,7 +14,7 @@ const Hero = () => {
       <Life class={'text-gray-400'} />
       <div data-hero-title class={'relative flex flex-col'}>
         <span class={'self-start text-xs text-gray-400'}>{NICK_NAMES}</span>
-        <h1 class={'text-4xl sm:text-6xl lg:text-8xl font-bold text-gray-900'}>{PROGRAMER_NAME}</h1>
+        <h1 class={'text-4xl sm:text-6xl lg:text-8xl font-bold text-gray-900'}>{PROGRAMMER_NAME}</h1>
         <span class={'self-end text-xs text-gray-400'}>{LABEL}</span>
       </div>
     </section>

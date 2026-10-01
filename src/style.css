@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "@fontsource-variable/jetbrains-mono/wght.css";
 
-@import "./components/custom/coursor_dot/cursor_dot.css";
+@import "./components/custom/cursor_dot/cursor_dot.css";
 @import "./components/custom/reveal/reveal.css";
 @source "./";
 
