@@ -1,7 +1,5 @@
-// Game of Life at double vertical resolution, ported from play.core "Golgol" (ertdfgcvb, Apache-2.0).
-
 const FPS = 24
-const BRUSH = 5
+const BRUSH = 6
 
 const run = (field: HTMLElement) => {
   const container = field.parentElement
@@ -131,7 +129,6 @@ const run = (field: HTMLElement) => {
   }).observe(container)
 }
 
-// Every <Life /> layer runs its own automaton sized to its parent element.
 export const life = () => {
   document.querySelectorAll<HTMLElement>('[data-life]').forEach(run)
 }

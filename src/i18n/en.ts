@@ -51,6 +51,16 @@ const en = {
     body: 'Open to full-time roles and freelance work. Email is the fastest way to reach me.',
     cv: 'szymon-wardak-cv-en.pdf',
   },
+  errors: {
+    404: {
+      cmd: (path: string) => `cd ${path}`,
+      err: (path: string) => `bash: No such page or route`,
+    },
+    500: {
+      cmd: (path: string) => `curl ${path}`,
+      err: () => 'Segmentation fault (core dumped). Try again in a moment.',
+    },
+  },
   footer: {},
 }
 

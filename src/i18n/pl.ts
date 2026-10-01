@@ -53,6 +53,16 @@ const pl: Dictionary = {
     body: 'Jestem otwarty na pracę na etat i zlecenia freelance. Najszybciej złapiesz mnie mailowo.',
     cv: 'szymon-wardak-cv-pl.pdf',
   },
+  errors: {
+    404: {
+      cmd: (path: string) => `cd ${path}`,
+      err: (path: string) => `bash: Nie ma takiego strony ani trasy`,
+    },
+    500: {
+      cmd: (path: string) => `curl ${path}`,
+      err: () => 'Naruszenie ochrony pamięci (zrzut pamięci). Spróbuj ponownie za chwilę.',
+    },
+  },
   footer: {},
 }
 

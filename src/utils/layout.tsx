@@ -2,8 +2,8 @@ import jetbrainsMonoUrl from '@fontsource-variable/jetbrains-mono/files/jetbrain
 import { jsxRenderer, useRequestContext } from 'hono/jsx-renderer'
 import { Link, Script, ViteClient } from 'vite-ssr-components/hono'
 import CursorDot from '../components/custom/coursor_dot/CursorDot'
-import Footer from '../components/custom/footer/Footer'
-import Navbar from '../components/custom/navbar/Navbar'
+import Footer from '../components/global/footer/Footer'
+import Navbar from '../components/global/navbar/Navbar'
 import PageWrapper from '../components/domain/PageWrapper'
 import { DEFAULT_LOCALE, dictionaries, LOCALES, localePath, toLocale } from '../i18n'
 
@@ -34,7 +34,7 @@ export const layout = jsxRenderer(({ children }) => {
         <CursorDot />
         <Navbar locale={locale} t={t.nav} />
         <PageWrapper>{children}</PageWrapper>
-        <Footer t={t.footer} />
+        <Footer />
       </body>
       <Script src="/src/script.ts" />
     </html>

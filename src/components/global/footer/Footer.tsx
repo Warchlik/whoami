@@ -1,7 +1,6 @@
-import type { Dictionary } from '../../../i18n'
-import Life from '../life/Life'
+import Life from '../../custom/life/Life'
 
-const Footer = ({ t }: { t: Dictionary['footer'] }) => {
+const Footer = () => {
   return (
     <footer class={'relative overflow-hidden w-full border-t border-gray-200 bg-white'}>
       <Life class={'text-gray-400'} />
