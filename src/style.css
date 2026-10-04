@@ -5,6 +5,22 @@
 @import "./components/custom/reveal/reveal.css";
 @source "./";
 
+@custom-variant docked {
+  @media (width < 64rem) {
+    @slot;
+  }
+  @media (pointer: coarse) {
+    @slot;
+  }
+}
+@custom-variant floating {
+  @media (width >= 64rem) {
+    @media not all and (pointer: coarse) {
+      @slot;
+    }
+  }
+}
+
 @theme {
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
 }

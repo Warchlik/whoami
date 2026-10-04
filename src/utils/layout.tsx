@@ -4,7 +4,7 @@ import { Link, Script, ViteClient } from 'vite-ssr-components/hono'
 import CursorDot from '../components/custom/cursor_dot/CursorDot'
 import Footer from '../components/global/footer/Footer'
 import Navbar from '../components/global/navbar/Navbar'
-import { DEFAULT_LOCALE, dictionaries, LOCALES, localePath, toLocale } from '../i18n'
+import { DEFAULT_LOCALE, dictionaries, LOCALES, localeUrl, toLocale } from '../i18n'
 
 declare module 'hono' {
   interface ContextRenderer {
@@ -28,14 +28,14 @@ export const layout = jsxRenderer(({ children, navbar = true, footer = true }) =
         <link rel="canonical" href={new URL(c.req.path, c.req.url).href} />
 
         {LOCALES.map((l) => (
-          <link rel="alternate" hreflang={l} href={new URL(localePath(l), c.req.url).href} />
+          <link rel="alternate" hreflang={l} href={localeUrl(l, c.req.url)} />
         ))}
 
-        <link rel="alternate" hreflang="x-default" href={new URL(localePath(DEFAULT_LOCALE), c.req.url).href} />
+        <link rel="alternate" hreflang="x-default" href={localeUrl(DEFAULT_LOCALE, c.req.url)} />
 
         <ViteClient />
         <Link href="/src/style.css" rel="stylesheet" />
-        <Link rel="preload" href={jetbrainsMonoUrl} as="font" type="font/woff2" crossorigin="anonymous" />
+        <link rel="preload" href={jetbrainsMonoUrl} as="font" type="font/woff2" crossorigin="anonymous" />
       </head>
       <body class={'bg-white font-mono'}>
         <CursorDot />

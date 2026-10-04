@@ -10,7 +10,6 @@ export const experience = () => {
     if (!(dialog instanceof HTMLDialogElement)) return
 
     button.addEventListener('click', () => dialog.showModal())
-    // The dialog has no padding, so a click that targets the dialog itself landed on the backdrop.
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) dialog.close()
     })

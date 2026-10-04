@@ -15,7 +15,6 @@ export const cursor_dot = () => {
   animate(dot, { width: DEFAULT_SIZE, height: DEFAULT_SIZE, opacity: 1 }, { duration: 0 })
 
   const onMouseMove = (e: MouseEvent) => {
-    // A modal dialog sits in the top layer above everything else; the dot must live inside it to stay visible.
     const host = (e.target as Element).closest('dialog[open]') ?? document.body
     if (dot.parentElement !== host) host.append(dot)
     animate(dot, { x: e.clientX, y: e.clientY }, MOVE_SPRING)

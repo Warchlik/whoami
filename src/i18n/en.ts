@@ -1,8 +1,8 @@
 const en = {
   meta: {
-    title: 'Szymon Wardak — Full Stack Software Engineer',
+    title: '$szymon_wardak = "Full Stack Software Engineer"',
     description:
-      'Full Stack Software Engineer from Warsaw, focused on backend and system architecture. PHP, Python and React, running in Docker on Linux.',
+      'Full Stack Software Engineer from Warsaw, focused on backend and system architecture. JS/TS, Python, Golang and PHP, running in Docker on Linux.',
   },
   nav: {
     main: 'Main',
@@ -29,10 +29,10 @@ const en = {
       {
         role: 'Full-stack Developer',
         company: 'Codefellow',
-        period: '2024 — Present',
+        period: '2024 - Present',
         summary: 'SaaS & CRM systems, moving step by step to microservices.',
         short:
-          'I develop and maintain business applications — from gathering requirements with the client to testing, deployment and monitoring. I build frontends in JS/TS, backends in PHP and microservices in Python and Go. I optimize databases, build device integrations and manage server infrastructure.',
+          'I develop and maintain business applications - from gathering requirements with the client to testing, deployment and monitoring. I build frontends in JS/TS, backends in PHP and microservices in Python and Go. I optimize databases, build device integrations and manage server infrastructure.',
         long: [
           'I own tasks across the full application lifecycle: from talking with the client and defining requirements, through planning and implementation, to testing, deployment and maintenance. I build frontends in JavaScript and TypeScript, backends in PHP and microservices in Python and Go.',
           'I work both on existing systems and on solutions built from scratch. I improve application performance by tuning SQL queries and choosing the right indexes. I build device integrations, data processing and transfer over MQTT, and mechanisms for authenticating application instances and handling certificates.',
@@ -43,12 +43,12 @@ const en = {
       {
         role: 'Full-stack Developer',
         company: 'Freelance',
-        period: '2024 — Present',
+        period: '2024 - Present',
         summary: 'Custom web apps, and the servers they run on.',
         short:
-          'I design, build and deploy websites and applications in the JS/TS ecosystem — from landing pages to admin panels and integrations. I use React, Next.js, TanStack Start and Hono, deploying to the edge as well. I also build ML models for price prediction, automating data preparation and retraining.',
+          'I design, build and deploy websites and applications in the JS/TS ecosystem - from landing pages to admin panels and integrations. I use React, Next.js, TanStack Start and Hono, deploying to the edge as well. I also build ML models for price prediction, automating data preparation and retraining.',
         long: [
-          'I help clients turn business needs into working websites and applications. I handle requirements, interface design, implementation, deployment and ongoing maintenance. I build landing pages, company websites, integrations and admin panels — using WordPress or building custom solutions tailored to the project.',
+          'I help clients turn business needs into working websites and applications. I handle requirements, interface design, implementation, deployment and ongoing maintenance. I build landing pages, company websites, integrations and admin panels - using WordPress or building custom solutions tailored to the project.',
           "I work mainly in JavaScript and TypeScript, using React, Next.js, TanStack Start and Hono. I match the technology and deployment model to each application's needs, using both edge environments and self-managed servers.",
           'I also develop ML solutions for price prediction based on datasets I collect and prepare myself. I build pipelines that periodically check for data changes and automatically retrain models. I also work on model versioning and on evaluating model quality before replacing the version in use.',
         ],

@@ -11,5 +11,7 @@ export const dictionaries: Record<Locale, Dictionary> = { en, pl }
 
 export const localePath = (locale: Locale) => (locale === DEFAULT_LOCALE ? '/' : `/${locale}`)
 
+export const localeUrl = (locale: Locale, base: string) => new URL(localePath(locale), base).href
+
 export const toLocale = (value: string): Locale =>
   (LOCALES as readonly string[]).includes(value) ? (value as Locale) : DEFAULT_LOCALE

@@ -6,7 +6,7 @@ const Footer = () => {
       <Life class={'text-gray-400'} />
       <div
         class={
-          'relative w-full max-w-3xl mx-auto px-6 py-8 flex gap-2 text-xs font-semibold text-gray-800 flex-row justify-center items-center'
+          'relative w-full max-w-3xl mx-auto px-6 py-8 docked:pb-20 flex gap-2 text-xs font-semibold text-gray-800 flex-row justify-center items-center'
         }
       >
         <span>© {new Date().getFullYear()} Szymon Wardak</span>
