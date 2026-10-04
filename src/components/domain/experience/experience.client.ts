@@ -5,6 +5,17 @@ const EDGE = 16
 const FOLLOW_SPRING = { type: 'spring', stiffness: 500, damping: 40 } as const
 
 export const experience = () => {
+  document.querySelectorAll<HTMLButtonElement>('[data-exp-open]').forEach((button) => {
+    const dialog = document.getElementById(button.getAttribute('aria-controls') ?? '')
+    if (!(dialog instanceof HTMLDialogElement)) return
+
+    button.addEventListener('click', () => dialog.showModal())
+    // The dialog has no padding, so a click that targets the dialog itself landed on the backdrop.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close()
+    })
+  })
+
   if (!window.matchMedia('(pointer: fine)').matches) return
 
   document.querySelectorAll<HTMLElement>('[data-exp-block]').forEach((block) => {

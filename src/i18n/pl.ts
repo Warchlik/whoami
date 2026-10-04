@@ -26,24 +26,52 @@ const pl: Dictionary = {
   experience: {
     label: 'doświadczenie',
     heading: 'Gdzie dowożę kod.',
+    close: 'Zamknij',
     jobs: [
       {
-        role: 'Full Stack Software Developer',
-        company: 'CodeFellow',
+        role: 'Full-stack Developer',
+        company: 'Codefellow',
         period: '2024 — obecnie',
         summary: 'Systemy SaaS i CRM, krok po kroku przenoszone na mikroserwisy.',
-        description:
-          'Rozwijam i utrzymuję systemy SaaS i CRM, stopniowo migrując je na mikroserwisy. Tworzę nowe funkcje biznesowe w PHP i Pythonie, optymalizuję zapytania MySQL/PostgreSQL i refaktoryzuję kod legacy. Projektuję REST API, dostrajam algorytmy scrapujące i dowożę frontendy w React. Konteneryzuję środowiska deweloperskie i produkcyjne w Dockerze i administruję serwerami Linux.',
-        tags: ['PHP', 'Python', 'React', 'MySQL', 'PostgreSQL', 'Docker', 'Linux'],
+        short:
+          'Rozwijam i utrzymuję aplikacje biznesowe — od ustalenia wymagań z klientem po testy, wdrożenie i monitoring. Tworzę frontend w JS/TS, backend w PHP oraz mikroserwisy w Pythonie i Go. Optymalizuję bazy danych, buduję integracje z urządzeniami i zarządzam infrastrukturą serwerową.',
+        long: [
+          'Samodzielnie realizuję zadania obejmujące cały cykl rozwoju aplikacji: od rozmów z klientem i ustalenia wymagań, przez planowanie prac i implementację, po testy, wdrożenie i utrzymanie. Rozwijam frontend w JavaScript i TypeScript, backend w PHP oraz mikroserwisy w Pythonie i Go.',
+          'Pracuję zarówno nad istniejącymi systemami, jak i rozwiązaniami budowanymi od podstaw. Optymalizuję wydajność aplikacji poprzez usprawnianie zapytań SQL i dobór indeksów. Tworzę integracje z urządzeniami, mechanizmy przetwarzania i przesyłania danych przez MQTT oraz rozwiązania do uwierzytelniania instancji aplikacji i obsługi certyfikatów.',
+          'Odpowiadam również za infrastrukturę serwerową, konfigurację brokerów MQTT, konteneryzację i automatyzację wdrożeń przez GitHub Actions. Piszę testy jednostkowe i integracyjne oraz wdrażam monitoring błędów wspierający utrzymanie systemów.',
+        ],
+        tags: ['PHP', 'Python', 'Go', 'JS/TS', 'SQL', 'MQTT', 'Docker', 'GitHub Actions', 'Linux'],
       },
       {
-        role: 'Full Stack Software Developer',
+        role: 'Full-stack Developer',
         company: 'Freelance',
         period: '2024 — obecnie',
         summary: 'Aplikacje webowe na zamówienie i serwery, na których działają.',
-        description:
-          'Projektuję i wdrażam aplikacje webowe na zamówienie: React/Next.js na froncie, Python/PHP na backendzie. Stawiam i zabezpieczam serwery VPS z Linuksem i Nginx, a operacje automatyzuję skryptami bash i cronem.',
-        tags: ['React', 'Next.js', 'Python', 'PHP', 'Nginx', 'Linux', 'Bash'],
+        short:
+          'Projektuję, buduję i wdrażam strony oraz aplikacje w ekosystemie JS/TS — od landing page’y po panele administracyjne i integracje. Korzystam z React, Next.js, TanStack Start i Hono, wdrażając rozwiązania także w środowisku edge. Tworzę również modele ML do przewidywania cen, automatyzując przygotowanie danych i retrening.',
+        long: [
+          'Pomagam klientom przełożyć potrzeby biznesowe na działające strony i aplikacje. Odpowiadam za ustalenie wymagań, projekt interfejsu, implementację, wdrożenie oraz późniejsze utrzymanie. Tworzę landing page’e, strony firmowe, integracje i panele administracyjne — wykorzystując WordPress lub budując własne rozwiązania dopasowane do projektu.',
+          'Pracuję głównie w JavaScript i TypeScript, korzystając z React, Next.js, TanStack Start i Hono. Dobieram technologię i sposób wdrożenia do potrzeb aplikacji, wykorzystując zarówno środowiska edge, jak i samodzielnie konfigurowane serwery.',
+          'Rozwijam również rozwiązania ML do przewidywania cen na podstawie samodzielnie pozyskiwanych i przygotowywanych zbiorów danych. Buduję procesy okresowego sprawdzania zmian w danych i automatycznego retreningu modeli. Pracuję także nad wersjonowaniem modeli oraz oceną ich jakości przed zastąpieniem używanej wersji.',
+        ],
+        tags: [
+          'React',
+          'Next.js',
+          'TanStack Start',
+          'Hono',
+          'Cloudflare',
+          'WordPress',
+          'Python',
+          'FastAPI',
+          'Django',
+          'DRF',
+          'PHP',
+          'Laravel',
+          'Go',
+          'Docker',
+          'GitHub Actions',
+          'ML',
+        ],
       },
     ],
   },

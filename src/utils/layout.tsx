@@ -19,7 +19,7 @@ export const layout = jsxRenderer(({ children, navbar = true, footer = true }) =
   const t = dictionaries[locale]
 
   return (
-    <html lang={locale}>
+    <html lang={locale} class={'has-[dialog[open]]:overflow-hidden'}>
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

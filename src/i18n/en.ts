@@ -24,24 +24,52 @@ const en = {
   experience: {
     label: 'experience',
     heading: "Where I've been shipping code.",
+    close: 'Close',
     jobs: [
       {
-        role: 'Full Stack Software Developer',
-        company: 'CodeFellow',
+        role: 'Full-stack Developer',
+        company: 'Codefellow',
         period: '2024 — Present',
         summary: 'SaaS & CRM systems, moving step by step to microservices.',
-        description:
-          'Developing and maintaining SaaS and CRM systems while migrating them step by step to microservices. Building new business features in PHP and Python, optimizing MySQL/PostgreSQL queries and refactoring legacy code. Designing REST APIs, tuning scraping algorithms and shipping React frontends. Containerizing dev and production environments with Docker and administering Linux servers.',
-        tags: ['PHP', 'Python', 'React', 'MySQL', 'PostgreSQL', 'Docker', 'Linux'],
+        short:
+          'I develop and maintain business applications — from gathering requirements with the client to testing, deployment and monitoring. I build frontends in JS/TS, backends in PHP and microservices in Python and Go. I optimize databases, build device integrations and manage server infrastructure.',
+        long: [
+          'I own tasks across the full application lifecycle: from talking with the client and defining requirements, through planning and implementation, to testing, deployment and maintenance. I build frontends in JavaScript and TypeScript, backends in PHP and microservices in Python and Go.',
+          'I work both on existing systems and on solutions built from scratch. I improve application performance by tuning SQL queries and choosing the right indexes. I build device integrations, data processing and transfer over MQTT, and mechanisms for authenticating application instances and handling certificates.',
+          "I'm also responsible for server infrastructure, MQTT broker configuration, containerization and deployment automation with GitHub Actions. I write unit and integration tests and set up error monitoring that supports system maintenance.",
+        ],
+        tags: ['PHP', 'Python', 'Go', 'JS/TS', 'SQL', 'MQTT', 'Docker', 'GitHub Actions', 'Linux'],
       },
       {
-        role: 'Full Stack Software Developer',
+        role: 'Full-stack Developer',
         company: 'Freelance',
         period: '2024 — Present',
         summary: 'Custom web apps, and the servers they run on.',
-        description:
-          'Designing and shipping custom web applications with React/Next.js on the front and Python/PHP on the back. Setting up and securing Linux VPS servers with Nginx, and automating ops with bash scripts and cron.',
-        tags: ['React', 'Next.js', 'Python', 'PHP', 'Nginx', 'Linux', 'Bash'],
+        short:
+          'I design, build and deploy websites and applications in the JS/TS ecosystem — from landing pages to admin panels and integrations. I use React, Next.js, TanStack Start and Hono, deploying to the edge as well. I also build ML models for price prediction, automating data preparation and retraining.',
+        long: [
+          'I help clients turn business needs into working websites and applications. I handle requirements, interface design, implementation, deployment and ongoing maintenance. I build landing pages, company websites, integrations and admin panels — using WordPress or building custom solutions tailored to the project.',
+          "I work mainly in JavaScript and TypeScript, using React, Next.js, TanStack Start and Hono. I match the technology and deployment model to each application's needs, using both edge environments and self-managed servers.",
+          'I also develop ML solutions for price prediction based on datasets I collect and prepare myself. I build pipelines that periodically check for data changes and automatically retrain models. I also work on model versioning and on evaluating model quality before replacing the version in use.',
+        ],
+        tags: [
+          'React',
+          'Next.js',
+          'TanStack Start',
+          'Hono',
+          'Cloudflare',
+          'WordPress',
+          'Python',
+          'FastAPI',
+          'Django',
+          'DRF',
+          'PHP',
+          'Laravel',
+          'Go',
+          'Docker',
+          'GitHub Actions',
+          'ML',
+        ],
       },
     ],
   },
