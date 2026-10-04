@@ -8,6 +8,13 @@ import { layout } from './utils/layout'
 
 const app = new Hono()
 
+app.use(async (c, next) => {
+  const url = new URL(c.req.url)
+  if (!url.hostname.startsWith('www.')) return next()
+  url.hostname = url.hostname.slice('www.'.length)
+  return c.redirect(url.href, 301)
+})
+
 app.use(layout)
 app.use(
   languageDetector({
