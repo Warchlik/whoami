@@ -2,6 +2,7 @@ type LifeProps = {
   class: string
 }
 
+// TODO: change javascript implementation to wasm for more performence
 const Life = ({ class: className }: LifeProps) => {
   return (
     <pre
